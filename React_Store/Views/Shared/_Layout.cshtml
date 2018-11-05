@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Onboarding Task -4</title>
+  
+</head>
+<body>
+    <div class="container body-content">
+        <div id="nav-root"></div>
+        <br/><br />
+        @RenderBody()
+        <hr />
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Onboarding Task -4 </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/navbar")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+
+
+
+
+
+
