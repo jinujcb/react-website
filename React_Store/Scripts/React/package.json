@@ -2,7 +2,7 @@
   "name": "react_script",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "wbp": "webpack --config webpack.config.js"
@@ -26,7 +26,9 @@
     "axios": "^0.18.0",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
-    "mdbreact": "^4.8.1",
+    "moment": "^2.22.2",
+    "react-datepicker": "^1.8.0",
+    "react-moment": "^0.8.3",
     "react-router-dom": "^4.3.1",
     "react-strap": "0.0.1",
     "react-validation": "^3.0.7",

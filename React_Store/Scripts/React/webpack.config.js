@@ -6,7 +6,6 @@
         products: "./ProductsIndex.jsx",
         stores: "./StoresIndex.jsx",
         sales:"./SalesIndex.jsx",
-        app: "./app.jsx",
         Navbar: "./Navbar.jsx",
     
     }

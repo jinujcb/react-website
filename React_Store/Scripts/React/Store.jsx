@@ -10,11 +10,12 @@ class Store extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: 'Store Details', m_title: '', open: false, datas: [], customerdata: [], size: 'small', Id: '', Name: '', Address: '', nameError: '',
+            title: 'Store Details', m_title: '', open: false, openDelete: false, datas: [], customerdata: [], size: 'small', Id: '', Name: '', Address: '', nameError: '',
             addressError: '',
         };
 
         this.show = this.show.bind(this);///binding only for functions
+        this.delete = this.delete.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -39,14 +40,14 @@ class Store extends React.Component {
         var Id = event.target.id;
         event.preventDefault();
 
-        var fn;
+        let add_edit;
         if (event.target.value === '') {
-            fn = 'Create';
+            add_edit = 'Create';
             this.setState({ Id: '', Name: '', Address: '' })
         }
         else {
-            var form_ID = Id
-            fn = event.target.value;
+           
+            add_edit = event.target.value;
 
             axios.get('/Stores/GetStore/' + Id)
                 .then(res => {
@@ -61,7 +62,7 @@ class Store extends React.Component {
         this.setState(state => ({
             size: 'small',
             open: true,
-            m_title: fn,
+            m_title: add_edit,
             nameError: '',
             addressError: ''
         }));
@@ -94,15 +95,16 @@ class Store extends React.Component {
             });
             this.setState({ open: false })
         }
-        else if (Name != '' && Address != '' && m_title === 'Delete') {
+        else if (this.state.m_title === 'Delete') {
+
             axios({
                 method: 'post',
                 url: '/Stores/Delete/',
                 data: {
-                    ID: Id
+                    ID: this.state.Id
                 }
             });
-            this.setState({ open: false })
+            this.setState({ openDelete: false })
         }
 
         else {
@@ -120,14 +122,32 @@ class Store extends React.Component {
         }
 
     }
-    close = () => this.setState({ open: false })
+    delete(event) {
+        this.setState({
+            Id: event.target.id,
+            m_title: 'Delete',
+            openDelete: true,
+        });
+    }
+    close = () => this.setState({ open: false, openDelete:false })
     render() {
-        const { open, size, datas } = this.state
+        const { open, openDelete, size, datas } = this.state
 
         return (
 
             <div>
-
+                <Modal size="small" open={openDelete} onClose={this.close} closeIcon>
+                    <Modal.Header>{this.state.m_title}</Modal.Header>
+                    <Modal.Content>
+                        <p>Are you sure you want to delete the item?</p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button color='red' onClick={this.close}>Cancel</Button>
+                        <Button positive icon='checkmark' labelPosition='right' content='Yes' type='submit' onClick={() => {
+                            this.submit()
+                        }} />
+                    </Modal.Actions>
+                </Modal>
 
                 <Modal size="small" open={open} onClose={this.close} closeIcon>
                     <Modal.Header>{this.state.m_title}</Modal.Header>
@@ -192,7 +212,7 @@ class Store extends React.Component {
                                  </Button>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    <Button color='red' id="btnDelete" onClick={this.show} id={datas.ID} value='Delete' icon='trash'>
+                                    <Button color='red' id="btnDelete" onClick={this.delete} id={datas.ID} value='Delete' icon='trash'>
                                         <i aria-hidden='true' className='trash icon' /> Delete
                                  </Button>
                                 </Table.Cell>
